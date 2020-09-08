@@ -6,9 +6,10 @@ Github action that creates an aws profile using the session token in the environ
 
 Simple usage
 ```yaml
-      - uses: Brightspace/actions-create-aws-profile@master
-        with:
-          profile-name: 'Profile Name to Create'
+steps
+  - uses: Brightspace/actions-create-aws-profile@master
+    with:
+      profile-name: 'Profile Name to Create'
 ```
 
 Custom Environment Variables
