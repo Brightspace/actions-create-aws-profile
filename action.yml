@@ -1,0 +1,25 @@
+name: 'Create AWS Profile'
+description: 'Creates an AWS profile from environment variables'
+inputs:
+  access-key-id-var:
+    description: 'Environment variable containing the access key id'
+    required: true
+    default: 'AWS_ACCESS_KEY_ID'
+  secret-access-key-var:
+    description: 'Environment variable containing the secret access key'
+    required: true
+    default: 'AWS_SECRET_ACCESS_KEY'
+  session-token-var:
+    description: 'Environment variable containing the session token'
+    required: true
+    default: 'AWS_SESSION_TOKEN'
+runs:
+  using: "composite"
+  steps: 
+    - run: |
+        mkdir -p ~/.aws
+        echo "[$1]" > ~/.aws/credentials
+        echo "aws_access_key_id = $${{ inputs.access-key-id-var }}" >> ~/.aws/credentials
+        echo "aws_secret_access_key = $${{ inputs.secret-access-key-var }}" >> ~/.aws/credentials
+        echo "aws_session_token = $${{ inputs.session-token-var }}" >> ~/.aws/credentials
+      shell: bash
