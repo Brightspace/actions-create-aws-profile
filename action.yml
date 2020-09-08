@@ -13,12 +13,15 @@ inputs:
     description: 'Environment variable containing the session token'
     required: true
     default: 'AWS_SESSION_TOKEN'
+  profile-name:
+    description: 'Name of the profile to create'
+    required: true
 runs:
   using: "composite"
   steps: 
     - run: |
         mkdir -p ~/.aws
-        echo "[$1]" > ~/.aws/credentials
+        echo "[${{ inputs.profile-name }}]" >> ~/.aws/credentials
         echo "aws_access_key_id = $${{ inputs.access-key-id-var }}" >> ~/.aws/credentials
         echo "aws_secret_access_key = $${{ inputs.secret-access-key-var }}" >> ~/.aws/credentials
         echo "aws_session_token = $${{ inputs.session-token-var }}" >> ~/.aws/credentials
