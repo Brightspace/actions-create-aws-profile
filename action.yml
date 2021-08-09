@@ -20,9 +20,11 @@ runs:
   using: "composite"
   steps: 
     - run: |
-        mkdir -p ~/.aws
-        echo "[${{ inputs.profile-name }}]" >> ~/.aws/credentials
-        echo "aws_access_key_id = $${{ inputs.access-key-id-var }}" >> ~/.aws/credentials
-        echo "aws_secret_access_key = $${{ inputs.secret-access-key-var }}" >> ~/.aws/credentials
-        echo "aws_session_token = $${{ inputs.session-token-var }}" >> ~/.aws/credentials
+        FILE_NAME=${AWS_SHARED_CREDENTIALS_FILE:-$RUNNER_TEMP/.aws/credentials}
+        echo "AWS_SHARED_CREDENTIALS_FILE=$FILE_NAME" >> $GITHUB_ENV
+        mkdir -p "$(dirname "$FILE_NAME")"
+        echo "[${{ inputs.profile-name }}]" >> $FILE_NAME
+        echo "aws_access_key_id = $${{ inputs.access-key-id-var }}" >> $FILE_NAME
+        echo "aws_secret_access_key = $${{ inputs.secret-access-key-var }}" >> $FILE_NAME
+        echo "aws_session_token = $${{ inputs.session-token-var }}" >> $FILE_NAME
       shell: bash
