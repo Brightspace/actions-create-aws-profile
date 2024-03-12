@@ -21,6 +21,7 @@ runs:
   steps: 
     - run: |
         FILE_NAME=${AWS_SHARED_CREDENTIALS_FILE:-$RUNNER_TEMP/.aws/credentials}
+        echo "AWS_SDK_LOAD_CONFIG=true" >> $GITHUB_ENV # Needed for the JS AWS SDK to use AWS_SHARED_CREDENTIALS_FILE
         echo "AWS_SHARED_CREDENTIALS_FILE=$FILE_NAME" >> $GITHUB_ENV
         mkdir -p "$(dirname "$FILE_NAME")"
         echo "[${{ inputs.profile-name }}]" >> $FILE_NAME
